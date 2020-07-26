@@ -2,7 +2,7 @@
   "name": "fenxiao",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "fenxiao",
+  "productName": "报名系统",
   "author": "Nevercome",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
+    "js-cookie": "^2.2.1",
     "quasar": "^1.0.0",
     "vue-i18n": "^8.0.0"
   },

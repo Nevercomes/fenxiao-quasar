@@ -1,4 +1,4 @@
-# fenxiao (fenxiao)
+# 报名系统 (fenxiao)
 
 A Quasar Framework app
 
