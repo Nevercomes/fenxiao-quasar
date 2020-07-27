@@ -1,9 +1,9 @@
 import axios from 'axios'
-import router from '@/router'
+import router from 'src/router'
 import { Dialog, Notify } from 'quasar'
 import {
   getToken
-} from '@/utils/auth'
+} from 'src/utils/auth'
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
@@ -63,15 +63,15 @@ service.interceptors.response.use(
           })
         })
         return Promise.reject(res)
-      } else if (res.statusCode === 403 || res.data.code === '70001') {
+      } else if (res.statusCode === 403 || res.data.code === 70001) {
         Notify.create({
           message: '接口权限不足',
           color: 'negative'
         })
         return Promise.reject(res)
-      } else if (res.data.code !== '1' && res.data.message !== undefined) {
+      } else if (res.data.code !== 1 && res.data.message) {
         Notify.create({
-          message: res.data.msg,
+          message: res.data.message,
           color: 'negative'
         })
         return Promise.reject(res)
@@ -81,14 +81,8 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    console.log('err' + error)
-    Dialog.create({
-      title: '登录异常',
-      message: '身份验证已过期，请重新登录'
-    }).onOk(() => {
-      router.push({
-        name: 'login'
-      })
+    Notify.create({
+      message: '好像哪里出错了'
     })
     return Promise.reject(error)
   }

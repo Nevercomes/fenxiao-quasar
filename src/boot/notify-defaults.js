@@ -21,6 +21,13 @@ Vue.prototype.msgSuccess = function (message) {
   })
 }
 
+Vue.prototype.msgWarn = function (message) {
+  Notify.create({
+    message: message,
+    color: 'warning'
+  })
+}
+
 Vue.prototype.msgError = function (message) {
   Notify.create({
     message: message,

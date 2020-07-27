@@ -7,7 +7,7 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 
-module.exports = function (/* ctx */) {
+module.exports = function (ctx) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
@@ -71,7 +71,15 @@ module.exports = function (/* ctx */) {
           loader: 'eslint-loader',
           exclude: /node_modules/
         })
-      }
+      },
+
+      env: ctx.dev
+        ? { // so on dev we'll have
+          API: JSON.stringify('https://dev.api.com')
+        }
+        : { // and on build (production):
+          API: JSON.stringify('https://prod.api.com')
+        }
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -80,12 +88,26 @@ module.exports = function (/* ctx */) {
       port: 81,
       open: true, // opens browser window automatically
       proxy: {
-        // 将所有以/api开头的请求代理到本地后台服务器
-        '/api': {
+        // TODO process.env.VUE_APP_BASE_API配置失效
+        // [process.env.VUE_APP_BASE_API]: {
+        //   target: 'http://localhost:8081',
+        //   changeOrigin: true,
+        //   pathRewrite: {
+        //     ['^' + process.env.VUE_APP_BASE_API]: ''
+        //   }
+        // }
+        '/a': {
           target: 'http://localhost:8081',
           changeOrigin: true,
           pathRewrite: {
-            '^/api': ''
+            '^/a': '/a'
+          }
+        },
+        '/f': {
+          target: 'http://localhost:8081',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/f': '/f'
           }
         }
       }

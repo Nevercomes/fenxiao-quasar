@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import example from './module-example'
+import user from './modules/user.js'
+import getters from './getters.js'
 
 Vue.use(Vuex)
 
@@ -17,11 +18,9 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // example
+      user
     },
-
-    // enable strict mode (adds overhead!)
-    // for dev mode only
+    getters,
     strict: process.env.DEV
   })
 
