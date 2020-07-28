@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from 'src/router'
+import router from 'src/router/index'
 import { Dialog, Notify } from 'quasar'
 import {
   getToken
@@ -37,6 +37,7 @@ service.interceptors.response.use(
     // const code = res.data.code
     const statusCode = res.statusCode + ''
     const codeHead = statusCode.substring(0, 1)
+    console.log(res)
     if (codeHead === '4' || codeHead === '5') {
       return Promise.reject(res)
     } else {
@@ -58,8 +59,8 @@ service.interceptors.response.use(
           title: '登录异常',
           message: '身份验证已过期，请重新登录'
         }).onOk(() => {
-          router.push({
-            name: 'login'
+          router.replace({
+            name: 'Login'
           })
         })
         return Promise.reject(res)

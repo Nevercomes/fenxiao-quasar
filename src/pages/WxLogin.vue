@@ -12,6 +12,7 @@ import {
 } from 'src/utils/util.js'
 
 export default {
+  name: 'WxLogin',
   created () {
     const path = getQueryParam('router_path') || 'signupList'
     const query = getQueryParam('query') || ''
@@ -24,14 +25,14 @@ export default {
         window.location.href = res.data
       } else {
         this.$router.push({
-          name: 'login',
+          name: 'Login',
           query: param
         })
       }
     }).catch(() => {
       this.msgError('微信授权登录失败，请使用账号密码登录')
       this.$router.push({
-        name: 'login',
+        name: 'Login',
         query: param
       })
     })

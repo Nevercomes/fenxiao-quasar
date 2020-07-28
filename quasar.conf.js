@@ -129,6 +129,10 @@ module.exports = function (ctx) {
           negative: '#C10015',
           info: '#31CCEC',
           warning: '#F2C037'
+        },
+        loadingBar: {
+          color: 'primary',
+          position: 'bottom'
         }
       },
 
@@ -140,7 +144,11 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Dialog',
-        'Notify'
+        'Notify',
+        'LoadingBar'
+      ],
+      directives: [
+        'GoBack'
       ]
     },
 

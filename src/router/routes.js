@@ -2,24 +2,35 @@
 const routes = [
   {
     path: '/',
-    name: 'wxLogin',
+    name: 'WxLogin',
     component: () => import('pages/WxLogin.vue')
   },
   {
     path: '/login',
-    name: 'login',
+    name: 'Login',
     component: () => import('pages/Login.vue')
   },
   {
-    path: '/index',
+    path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: 'home',
-        name: 'home',
+        name: 'Home',
         component: () => import('pages/Index.vue')
+      },
+      {
+        path: 'signup/list',
+        name: 'SignUpList',
+        component: () => import('pages/SignUpList.vue'),
+        meta: { keepAlive: true }
       }
     ]
+  },
+  {
+    path: '/signup/info',
+    name: 'SignUpInfo',
+    component: () => import('pages/SignUpInfo.vue')
   },
   // Always leave this as last one,
   // but you can also remove it

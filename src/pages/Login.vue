@@ -89,7 +89,7 @@ export default {
       shopList: [],
       shopOptions: [],
       // 跳转页面路由
-      routerPath: 'signupList',
+      routerPath: 'SignUpList',
       query: {}
     }
   },
@@ -112,7 +112,7 @@ export default {
               this.submiting = false
               this.msgSuccess('登录成功')
               this.$router.push({
-                name: 'index'
+                name: this.routerPath
               })
             })
             .catch((error) => {
