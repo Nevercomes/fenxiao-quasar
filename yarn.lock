@@ -9220,6 +9220,11 @@ vue-loader@15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-qr@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npm.taobao.org/vue-qr/download/vue-qr-2.2.1.tgz#d7844e75d5223ef2ab192523cf8bb129d3b82489"
+  integrity sha1-14ROddUiPvKrGSUjz4uxKdO4JIk=
+
 vue-router@3.2.0:
   version "3.2.0"
   resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-3.2.0.tgz?cache=0&sync_timestamp=1595343990231&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-router%2Fdownload%2Fvue-router-3.2.0.tgz#da35195ffe37fdf0bec9f5f8f72781d2a7718815"

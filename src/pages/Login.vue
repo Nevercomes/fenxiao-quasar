@@ -20,11 +20,18 @@
         bottom-slots
         v-model="form.password"
         label="密码"
-        type="password"
+        :type="isPwd ? 'password' : 'text'"
         :rules="[val => !!val || '密码不能为空']"
       >
         <template v-slot:prepend>
           <q-icon name="lock" />
+        </template>
+        <template v-slot:append>
+          <q-icon
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
+          />
         </template>
       </q-input>
       <q-select
@@ -90,7 +97,9 @@ export default {
       shopOptions: [],
       // 跳转页面路由
       routerPath: 'SignUpList',
-      query: {}
+      query: {},
+      // 密码可见性
+      isPwd: true
     }
   },
   created () {

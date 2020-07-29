@@ -11,16 +11,103 @@
       报名详细信息
     </q-toolbar>
 
+    <nl-block-title
+      :title="'学生信息'"
+      class="q-mt-sm"
+    />
+    <div class="column q-px-md q-mb-sm">
+      <div class="row q-gutter-sm">
+        <q-input
+          class="col"
+          label="姓名"
+          v-model="student.name"
+          readonly
+        />
+        <q-input
+          class="col"
+          label="学校"
+          v-model="studentDesc"
+          readonly
+        />
+      </div>
+      <div class="row q-gutter-sm">
+        <q-input
+          class="col"
+          label="上课校区"
+          v-model="classShop"
+          readonly
+        />
+        <q-input
+          class="col"
+          label="联系方式"
+          v-model="contact"
+          readonly
+        />
+      </div>
+      <div class="row q-gutter-sm">
+        <q-input
+          class="col"
+          label="上课班种"
+          v-model="classType"
+          readonly
+        />
+      </div>
+    </div>
+
+    <nl-block-title :title="'缴费信息'" />
+
     <q-form
       @submit="submit"
-      class="q-gutter-md column justify-center"
+      class="column justify-center q-px-md q-mb-sm"
       ref="form"
     >
+      <div class="row q-gutter-sm">
+        <q-input
+          class="col"
+          label="学费"
+          v-model="form.tuition"
+          :rules="[val => !!val || '学费不能为空']"
+          lazy-rules
+        />
+        <q-input
+          class="col"
+          label="预留金"
+          v-model="form.reserve"
+          :rules="[val => !!val || '预留金不能为空']"
+          lazy-rules
+        />
+      </div>
+      <div class="row q-gutter-sm">
+        <q-input
+          class="col"
+          label="优惠"
+          v-model="form.discount"
+          :rules="[val => !!val || '优惠不能为空']"
+          lazy-rules
+        />
+        <q-select
+          class="col"
+          :options="newOrOldOptions"
+          label="新老学员"
+          v-model="form.newOrOld"
+          :rules="[val => !!val || '请选择新老学员']"
+          lazy-rules
+        />
+      </div>
+      <div class="row q-gutter-sm">
+        <q-input
+          class="col"
+          label="应缴学费"
+          v-model="finalTuition"
+          readonly
+        />
+      </div>
       <q-btn
         label="提交"
         type="submit"
         color="primary"
         :loading="submiting"
+        class="q-mt-lg"
       >
         <template v-slot:loading>
           <q-spinner-facebook />
@@ -39,9 +126,13 @@ import {
   getSignup,
   updateSignup
 } from 'src/api/signup.js'
+import NlBlockTitle from 'src/components/NlBlockTitle'
 
 export default {
   name: 'SignUpInfo',
+  components: {
+    NlBlockTitle
+  },
   data () {
     return {
       form: {},
@@ -57,12 +148,15 @@ export default {
   },
   computed: {
     finalTuition: function () {
-      return this.form.tuition && this.form.discount
+      return (this.form.tuition || this.form.tuition === 0) &&
+        (this.form.reserve || this.form.reserve === 0) &&
+        (this.form.discount || this.form.discount === 0)
         ? this.form.tuition - this.form.reserve - this.form.discount
         : ''
     },
     studentDesc: function () {
       const arr = []
+      if (this.student.provincename) arr.push(this.student.provincename)
       if (this.student.school) arr.push(this.student.school)
       if (this.student.major) arr.push(this.student.major)
       if (this.student.gread) arr.push(this.student.gread)
@@ -70,7 +164,6 @@ export default {
     },
     classShop: function () {
       const arr = []
-      if (this.student.provincename) arr.push(this.student.provincename)
       if (this.student.shopname) arr.push(this.student.shopname)
       return arr.join('-')
     },
@@ -120,7 +213,7 @@ export default {
       this.student.reserve = this.form.reserve
       this.student.newOrOld = this.form.newOrOld
       this.student.discount = this.form.discount
-      this.refs.form.validate().then(success => {
+      this.$refs.form.validate().then(success => {
         if (success) {
           this.submiting = true
           updateSignup(this.student).then(res => {

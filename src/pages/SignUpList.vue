@@ -48,32 +48,38 @@
       </q-btn-dropdown>
     </div>
 
-    <q-list
-      v-for="(group, idx) in timeList"
-      :key="idx"
+    <q-pull-to-refresh
+      @refresh="refresh"
+      ref="refresh"
     >
-      <q-item class="bg-grey-3">
-        <q-item-section>
-          {{group[0].enrollDate}}
-        </q-item-section>
-      </q-item>
-      <q-item
-        v-for="(item, idx2) in group"
-        :key="idx2"
-        clickable
-        v-ripple
-        @click="onClick(item.id)"
+      <q-list
+        v-for="(group, idx) in timeList"
+        :key="idx"
       >
-        <q-item-section>{{item.name}}</q-item-section>
-      </q-item>
-    </q-list>
+        <q-item class="bg-grey-3">
+          <q-item-section>
+            {{group[0].enrollDate}}
+          </q-item-section>
+        </q-item>
+        <q-item
+          v-for="(item, idx2) in group"
+          :key="idx2"
+          clickable
+          v-ripple
+          @click="onClick(item.id)"
+        >
+          <q-item-section>{{item.name}}</q-item-section>
+        </q-item>
+      </q-list>
+    </q-pull-to-refresh>
 
-    <q-inner-loading :showing="loading">
+    <!-- 会增加操作的迟滞感 -->
+    <!-- <q-inner-loading :showing="loading">
       <q-spinner-dots
         size="50px"
         color="primary"
       />
-    </q-inner-loading>
+    </q-inner-loading> -->
 
     <q-page-scroller
       position="bottom-right"
@@ -86,11 +92,10 @@
         color="primary"
       />
     </q-page-scroller>
-
     <nl-empty
       :show="empty"
-      :text="'还没有招生数据，快去招生吧~'"
-    />
+      :text="'没有招生数据，快去招生吧~'"
+    ></nl-empty>
 
   </q-page>
 </template>
@@ -163,12 +168,12 @@ export default {
     this.getList()
   },
   methods: {
-    getList () {
+    getList (done) {
       this.loading = true
       listSignup(this.queryParams).then(res => {
         this.dataList = res.data
-        this.empty = !this.dataList || this.dataList.length === 0
         this.timeList = []
+        this.empty = !this.dataList || this.dataList.length === 0
         this.dataList.forEach(element => {
           element.enrollDate = formatGroupTime(element.enrollDate)
         })
@@ -176,9 +181,15 @@ export default {
           return [item.enrollDate]
         })
         this.loading = false
+        if (done) done()
       }).catch(() => {
         this.loading = false
+        if (done) done()
       })
+    },
+    refresh (done) {
+      this.queryParams.pageNo = -1
+      this.getList(done)
     },
     onShopItemClick (item) {
       this.queryParams.shopName = item.text

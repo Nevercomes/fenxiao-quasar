@@ -24,6 +24,12 @@ const routes = [
         name: 'SignUpList',
         component: () => import('pages/SignUpList.vue'),
         meta: { keepAlive: true }
+      },
+      {
+        path: 'signup/qrcode',
+        name: 'SignUpQrCode',
+        component: () => import('pages/SignUpQrCode.vue'),
+        meta: { keepAlive: true }
       }
     ]
   },

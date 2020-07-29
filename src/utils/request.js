@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from 'src/router/index'
+import router from 'src/router/index.js'
 import { Dialog, Notify } from 'quasar'
 import {
   getToken
