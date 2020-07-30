@@ -12,9 +12,11 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
+    "babel-plugin-import": "^1.13.0",
     "core-js": "^3.6.5",
     "js-cookie": "^2.2.1",
     "quasar": "^1.0.0",
+    "vant": "^2.9.4",
     "vue-i18n": "^8.0.0",
     "vue-qr": "^2.2.1"
   },
