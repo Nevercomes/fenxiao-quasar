@@ -1,7 +1,7 @@
 <!-- 学生报名信息页面 -->
  <template>
   <div class="app-container">
-    <van-image
+    <q-img
       :src="signupBg"
       class="signup__from-screen-bg-img"
       ref="BackImage"
@@ -496,12 +496,9 @@ export default {
       if (this.validate()) {
         // 调用提交方法
         saveSignup(this.form).then(res => {
-          this.$notify({
-            type: 'success',
-            message: '提交信息成功，请等待老师与您联系'
-          })
+          this.msgSuccess('提交信息成功，请等待老师与您联系')
           this.$router.push({
-            name: 'successPage',
+            name: 'SuccessPage',
             query: {
               title: '报名信息提交成功',
               message: '感谢你的报名，老师将尽快与你联系'
@@ -575,18 +572,12 @@ export default {
         this.invalid.qq = true
       }
       if (isInvalid) {
-        this.$notify({
-          type: 'warning',
-          message: '请正确填写所有信息'
-        })
+        this.msgWarn('请正确填写所有信息')
         this.$forceUpdate()
       } else {
         if (!(/^1[3456789]\d{9}$/.test(this.form.phone))) {
           this.invalid.phone = true
-          this.$notify({
-            type: 'warning',
-            message: '手机号码格式不正确，请重新输入'
-          })
+          this.msgWarn('手机号码格式不正确，请重新输入')
           this.$forceUpdate()
           return false
         }

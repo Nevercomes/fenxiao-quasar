@@ -11,6 +11,11 @@ const routes = [
     component: () => import('pages/Login.vue')
   },
   {
+    path: '/success',
+    name: 'SuccessPage',
+    component: () => import('pages/SysSuccess.vue')
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
@@ -43,6 +48,11 @@ const routes = [
     path: '/signup',
     name: 'SignUpStudent',
     component: () => import('pages/SignUpStudent.vue')
+  },
+  {
+    path: '/signup/teacher',
+    name: 'SignUpTeacher',
+    component: () => import('pages/SignUpTeacher.vue')
   },
   {
     path: '/signup/info',

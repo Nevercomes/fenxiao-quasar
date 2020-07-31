@@ -4,12 +4,15 @@ import {
   Icon,
   Picker,
   Popup,
-  Dialog,
-  Image
+  Dialog
 } from 'vant'
 
 Vue.use(Icon)
 Vue.use(Picker)
 Vue.use(Popup)
 Vue.use(Dialog)
-Vue.use(Image)
+
+import 'vant/lib/icon/style'
+import 'vant/lib/picker/style'
+import 'vant/lib/popup/style'
+import 'vant/lib/dialog/style'
