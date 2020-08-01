@@ -12,8 +12,9 @@
     >
       <q-tabs
         narrow-indicator
-        align="center"
+        align="justify"
         dense
+        id="tabbar"
       >
         <q-route-tab
           icon="group"
@@ -43,6 +44,7 @@
 <script>
 
 import { mapGetters } from 'vuex'
+import { hasClass, removeClass, addClass } from 'src/utils/util'
 
 export default {
   name: 'MainLayout',
@@ -54,6 +56,17 @@ export default {
   data () {
     return {
     }
+  },
+  mounted () {
+    // 解决直接通过url地址进入页面的tabbar样式异常问题
+    const tabs = document.getElementById('tabbar')
+    const tabbar = tabs.firstElementChild // quasar组件转化为dom后，真实包裹tab的div
+    console.log(tabbar)
+    if (hasClass(tabbar, 'q-tabs__content--align-left')) {
+
+    }
+    removeClass(tabbar, 'q-tabs__content--align-left')
+    addClass(tabbar, 'q-tabs__content--align-justify')
   }
 }
 </script>

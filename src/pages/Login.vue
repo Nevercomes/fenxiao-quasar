@@ -1,10 +1,15 @@
 <template>
-  <div class="q-pa-md">
+  <div
+    class="q-pa-md column justify-center"
+    style="height: 80vh;"
+  >
     <q-form
       @submit="submit"
       class="q-gutter-md column justify-center"
       ref="form"
     >
+
+      <div class="text-h5 text-center">卓越登录</div>
       <q-input
         bottom-slots
         v-model="form.username"
