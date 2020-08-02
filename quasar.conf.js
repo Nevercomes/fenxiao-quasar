@@ -48,6 +48,7 @@ module.exports = function (ctx) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history' 去掉url中的#
 
+      publicPath: process.env.NODE_ENV === 'production' ? '/fenxiao/' : '/',
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)

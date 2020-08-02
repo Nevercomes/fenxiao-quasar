@@ -1,16 +1,19 @@
 <!-- 学生报名信息页面 -->
  <template>
-  <div class="app-container">
-    <q-img
+  <div
+    class="app-container"
+    ref="AppContainer"
+  >
+    <!-- <q-img
       :src="signupBg"
       class="signup__from-screen-bg-img"
       ref="BackImage"
-    />
+    /> -->
 
     <div class="row justify-center">
       <div
         class="column justify-between q-pa-md"
-        style="margin-top: 60px; "
+        style="margin-top: 70px; "
         ref="FormBox"
       >
         <!-- 姓名 -->
@@ -600,15 +603,20 @@ export default {
         }
       }
     },
+    // 解决安卓软键盘弹出屏幕高度改变的问题
     setHeight () {
       const sHeight = screen.height
       const sWidth = screen.width
+      console.log(sHeight, sWidth)
       this.sHeight = sHeight
       this.sWidth = sWidth
+      console.log(this.$refs)
+      this.$refs.AppContainer.style.height = sHeight + 'px'
+      this.$refs.AppContainer.style.width = sWidth + 'px'
       this.$refs.FormBox.style.height = sHeight * 0.7 + 'px'
       this.$refs.FormBox.style.paddingTop = sHeight * 0.08 + 'px'
-      this.$refs.BackImage.style.height = sHeight + 'px'
-      this.$refs.BackImage.style.width = sWidth + 'px'
+      // this.$refs.BackImage.style.height = sHeight + 'px'
+      // this.$refs.BackImage.style.width = sWidth + 'px'
     }
   }
 }
@@ -620,7 +628,14 @@ $primary-bg-color: #375455;
 $form-invalid-color: red;
 
 $form-item-width: 230px;
-$form-item-height: 40px;
+$form-item-height: 36px;
+
+.app-container {
+  // background-color: $primary-bg-color;
+  background: url("../assets/signup-bg.jpg") round left top;
+  background-size: contain;
+  z-index: -1000;
+}
 
 .signup__from-screen-bg-img {
   z-index: -1000;
@@ -652,6 +667,7 @@ $form-item-height: 40px;
   background-color: transparent;
   border: 1px solid white;
   border-radius: 17px;
+  margin: 3px 0;
 }
 
 .signup__form-item--invalid {
