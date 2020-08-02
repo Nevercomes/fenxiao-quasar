@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import user from './modules/user.js'
+import appStatus from './modules/appStatus'
 import getters from './getters.js'
 
 Vue.use(Vuex)
@@ -15,14 +16,11 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      user
-    },
-    getters,
-    strict: process.env.DEV
-  })
-
-  return Store
-}
+export default new Vuex.Store({
+  modules: {
+    user,
+    appStatus
+  },
+  getters,
+  strict: process.env.DEV
+})

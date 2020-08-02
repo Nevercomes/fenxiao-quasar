@@ -48,10 +48,7 @@
       </q-btn-dropdown>
     </div>
 
-    <q-pull-to-refresh
-      @refresh="refresh"
-      ref="refresh"
-    >
+    <q-pull-to-refresh @refresh="refresh">
       <q-list
         v-for="(group, idx) in timeList"
         :key="idx"
@@ -167,6 +164,12 @@ export default {
     this.getShopOptions()
     this.getList()
   },
+  activated () {
+    if (!this.$route.meta.isUseCache) {
+      // 重新加载数据，包含里重置分页，设空原有数据等操作
+      this.reloadData()
+    }
+  },
   methods: {
     getList (done) {
       this.loading = true
@@ -190,6 +193,9 @@ export default {
     refresh (done) {
       this.queryParams.pageNo = -1
       this.getList(done)
+    },
+    reloadData () {
+      this.getList()
     },
     onShopItemClick (item) {
       this.queryParams.shopName = item.text

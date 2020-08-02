@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from 'src/store/index'
 import router from 'src/router/index.js'
 import { Dialog, Notify } from 'quasar'
 import {
@@ -55,14 +56,24 @@ service.interceptors.response.use(
       if (typeof (res.data) === 'string' && (res.data.indexOf('家校通') !== -1 && res.data.indexOf(
         'placeholder="请填写登录账号"') !== -1)) { needLogin = true }
       if (needLogin) {
-        Dialog.create({
-          title: '登录异常',
-          message: '身份验证已过期，请重新登录'
-        }).onOk(() => {
-          router.replace({
-            name: 'Login'
+        // loginDialg简单的单例显示 锁？锁个屁
+        if (!store.state.appStatus.loginDialog) {
+          store.commit('showLoginDialog')
+          Dialog.create({
+            title: '登录异常',
+            message: '身份验证已过期，请重新登录',
+            persistent: true
+          }).onOk(() => {
+            router.replace({
+              name: 'Login',
+              params: { reload: true }
+            })
+            // 在离开login页面的时候设置hide
+            // store.commit('hideLoginDialog')
+          }).onDismiss(() => {
+            // store.commit('hideLoginDialog')
           })
-        })
+        }
         return Promise.reject(res)
       } else if (res.statusCode === 403 || res.data.code === 70001) {
         Notify.create({

@@ -114,6 +114,14 @@ export default {
     if (code) {
       this.wxLogin(code)
     }
+    if (this.$route.params.reload) location.reload()
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'SignUpList') {
+      to.meta.isUseCache = false
+    }
+    this.$store.commit('hideLoginDialog')
+    next()
   },
   methods: {
     submit () {
@@ -125,8 +133,9 @@ export default {
             .then(() => {
               this.submiting = false
               this.msgSuccess('登录成功')
-              this.$router.push({
-                name: this.routerPath
+              this.$router.replace({
+                name: this.routerPath,
+                params: { reload: true }
               })
             })
             .catch((error) => {
@@ -144,7 +153,7 @@ export default {
       this.$store.dispatch('WxLogin', code).then(() => {
         this.submiting = false
         this.msgSuccess('微信授权登录成功')
-        this.$router.push({
+        this.$router.replace({
           name: this.routerPath,
           query: this.query
         })

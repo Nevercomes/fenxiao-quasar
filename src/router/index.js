@@ -29,13 +29,17 @@ Vue.use(VueRouter)
 //   return Router
 // }
 
-export default new VueRouter({
+const router = new VueRouter({
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
     } else {
-      return { x: 0, y: 0 }
+      if (from.meta.keepAlive) {
+        from.meta.savedPosition = document.body.scrollTop
+      }
+      return { x: 0, y: to.meta.savedPosition || 0 }
     }
+    // return { x: 0, y: 0 }
   },
   routes,
 
@@ -45,3 +49,9 @@ export default new VueRouter({
   mode: process.env.VUE_ROUTER_MODE,
   base: process.env.VUE_ROUTER_BASE
 })
+
+router.beforeEach((to, from, next) => {
+  next()
+})
+
+export default router

@@ -28,19 +28,18 @@ const routes = [
         path: 'signup/list',
         name: 'SignUpList',
         component: () => import('pages/SignUpList.vue'),
-        meta: { keepAlive: true }
+        // 单纯的设置keepAlive只缓存的了页面数据，没有缓存scroll的位置
+        meta: { keepAlive: true, isUseCache: true }
       },
       {
         path: 'signup/qrcode',
         name: 'SignUpQrCode',
-        component: () => import('pages/SignUpQrCode.vue'),
-        meta: { keepAlive: true }
+        component: () => import('pages/SignUpQrCode.vue')
       },
       {
         path: 'signup/statistic',
         name: 'SignUpStatistic',
-        component: () => import('pages/SignUpStatistic.vue'),
-        meta: { keepAlive: true }
+        component: () => import('pages/SignUpStatistic.vue')
       }
     ]
   },

@@ -41,237 +41,239 @@
       </q-tabs>
     </q-header>
 
-    <div class="q-pa-md">
+    <q-pull-to-refresh @refresh="refresh">
+      <div class="q-pa-md">
+        <div
+          id="statistic"
+          class="text-grey q-mb-md"
+        >截止北京时间 {{time}} </div>
+        <q-card>
+          <q-card-section class="">
+            <!-- 当日 -->
+            <div class="row justify-around items-center">
+              <div class="column justify-around items-center">
+                <div class="text-caption text-grey-7">较昨日
+                  <span :class="[calDiff(todaySum.normalNumber, yesterdaySum.normalNumber) === '无变化' ? '' : 'color-1']">
+                    {{calDiff(todaySum.normalNumber, yesterdaySum.normalNumber)}}
+                  </span>
+                </div>
+                <div class="text-h4 color-1">{{todaySum.normalNumber}}</div>
+                <div>平时班人次</div>
+              </div>
+              <div class="column justify-around items-center">
+                <div class="text-caption text-grey-7">较昨日
+                  <span :class="[calDiff(todaySum.vocationNumber, yesterdaySum.vocationNumber) === '无变化' ? '' : 'color-1']">
+                    {{calDiff(todaySum.vocationNumber, yesterdaySum.vocationNumber)}}
+                  </span>
+                </div>
+                <div class="text-h4 color-2">{{todaySum.vocationNumber}}</div>
+                <div>假期班人次</div>
+              </div>
+              <div class="column justify-around items-center">
+                <div class="text-caption text-grey-7">较昨日
+                  <span :class="[calDiff(todaySum.softwareNumber, yesterdaySum.softwareNumber) === '无变化' ? '' : 'color-1']">
+                    {{calDiff(todaySum.softwareNumber, yesterdaySum.softwareNumber)}}
+                  </span>
+                </div>
+                <div class="text-h4 color-3">{{todaySum.softwareNumber}}</div>
+                <div>软件班人次</div>
+              </div>
+            </div>
+
+            <!-- 全年 -->
+            <div class="row justify-around items-center q-mt-md">
+              <div class="column justify-around items-center">
+                <div class="text-caption text-grey-7">较昨日
+                  <span :class="[calDiff(todaySum.normalNumber, 0) === '无变化' ? '' : 'color-1']">
+                    {{calDiff(todaySum.normalNumber, 0)}}
+                  </span>
+                </div>
+                <div class="text-h4 color-4">{{yearSum.normalNumber}}</div>
+                <div>全年平时班</div>
+              </div>
+              <div class="column justify-around items-center">
+                <div class="text-caption text-grey-7">较昨日
+                  <span :class="[calDiff(todaySum.vocationNumber, 0) === '无变化' ? '' : 'color-1']">
+                    {{calDiff(todaySum.vocationNumber, 0)}}
+                  </span>
+                </div>
+                <div class="text-h4 color-5">{{yearSum.vocationNumber}}</div>
+                <div>全年假期班</div>
+              </div>
+              <div class="column justify-around items-center">
+                <div class="text-caption text-grey-7">较昨日
+                  <span :class="[calDiff(todaySum.softwareNumber, 0) === '无变化' ? '' : 'color-1']">
+                    {{calDiff(todaySum.softwareNumber, 0)}}
+                  </span>
+                </div>
+                <div class="text-h4 color-6">{{yearSum.softwareNumber}}</div>
+                <div>全年软件班</div>
+              </div>
+            </div>
+
+            <!-- 全部数据 -->
+            <div class="row justify-around items-center q-mt-md">
+              <div class="column justify-around items-center">
+                <div class="text-caption text-grey-7">较昨日
+                  <span :class="[calDiff(todaySum.normalNumber + todaySum.vocationNumber, 0) === '无变化' ? '' : 'color-1']">
+                    {{calDiff(todaySum.normalNumber + todaySum.vocationNumber, 0)}}
+                  </span>
+                </div>
+                <div class="text-h4 color-4">{{(yearSum.normalNumber + yearSum.vocationNumber) || '...'}}</div>
+                <div>全年招生总人次</div>
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+
+      <nl-block-title
+        id="map"
+        :title="'全国校区招生地图'"
+      />
       <div
-        id="statistic"
-        class="text-grey q-mb-md"
-      >截止北京时间 {{time}} </div>
-      <q-card>
-        <q-card-section class="">
-          <!-- 当日 -->
-          <div class="row justify-around items-center">
-            <div class="column justify-around items-center">
-              <div class="text-caption text-grey-7">较昨日
-                <span :class="[calDiff(todaySum.normalNumber, yesterdaySum.normalNumber) === '无变化' ? '' : 'color-1']">
-                  {{calDiff(todaySum.normalNumber, yesterdaySum.normalNumber)}}
-                </span>
-              </div>
-              <div class="text-h4 color-1">{{todaySum.normalNumber}}</div>
-              <div>平时班人次</div>
-            </div>
-            <div class="column justify-around items-center">
-              <div class="text-caption text-grey-7">较昨日
-                <span :class="[calDiff(todaySum.vocationNumber, yesterdaySum.vocationNumber) === '无变化' ? '' : 'color-1']">
-                  {{calDiff(todaySum.vocationNumber, yesterdaySum.vocationNumber)}}
-                </span>
-              </div>
-              <div class="text-h4 color-2">{{todaySum.vocationNumber}}</div>
-              <div>假期班人次</div>
-            </div>
-            <div class="column justify-around items-center">
-              <div class="text-caption text-grey-7">较昨日
-                <span :class="[calDiff(todaySum.softwareNumber, yesterdaySum.softwareNumber) === '无变化' ? '' : 'color-1']">
-                  {{calDiff(todaySum.softwareNumber, yesterdaySum.softwareNumber)}}
-                </span>
-              </div>
-              <div class="text-h4 color-3">{{todaySum.softwareNumber}}</div>
-              <div>软件班人次</div>
-            </div>
-          </div>
+        class="q-pa-md"
+        style="height: 360px; width: 100vw"
+        id="mapBox"
+      />
 
-          <!-- 全年 -->
-          <div class="row justify-around items-center q-mt-md">
-            <div class="column justify-around items-center">
-              <div class="text-caption text-grey-7">较昨日
-                <span :class="[calDiff(todaySum.normalNumber, 0) === '无变化' ? '' : 'color-1']">
-                  {{calDiff(todaySum.normalNumber, 0)}}
-                </span>
-              </div>
-              <div class="text-h4 color-4">{{yearSum.normalNumber}}</div>
-              <div>全年平时班</div>
-            </div>
-            <div class="column justify-around items-center">
-              <div class="text-caption text-grey-7">较昨日
-                <span :class="[calDiff(todaySum.vocationNumber, 0) === '无变化' ? '' : 'color-1']">
-                  {{calDiff(todaySum.vocationNumber, 0)}}
-                </span>
-              </div>
-              <div class="text-h4 color-5">{{yearSum.vocationNumber}}</div>
-              <div>全年假期班</div>
-            </div>
-            <div class="column justify-around items-center">
-              <div class="text-caption text-grey-7">较昨日
-                <span :class="[calDiff(todaySum.softwareNumber, 0) === '无变化' ? '' : 'color-1']">
-                  {{calDiff(todaySum.softwareNumber, 0)}}
-                </span>
-              </div>
-              <div class="text-h4 color-6">{{yearSum.softwareNumber}}</div>
-              <div>全年软件班</div>
-            </div>
-          </div>
-
-          <!-- 全部数据 -->
-          <div class="row justify-around items-center q-mt-md">
-            <div class="column justify-around items-center">
-              <div class="text-caption text-grey-7">较昨日
-                <span :class="[calDiff(todaySum.normalNumber + todaySum.vocationNumber, 0) === '无变化' ? '' : 'color-1']">
-                  {{calDiff(todaySum.normalNumber + todaySum.vocationNumber, 0)}}
-                </span>
-              </div>
-              <div class="text-h4 color-4">{{yearSum.normalNumber + yearSum.vocationNumber}}</div>
-              <div>全年招生总人次</div>
-            </div>
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
-
-    <nl-block-title
-      id="map"
-      :title="'全国校区招生地图'"
-    />
-    <div
-      class="q-pa-md"
-      style="height: 360px; width: 100vw"
-      id="mapBox"
-    />
-
-    <nl-block-title
-      id="school"
-      :title="'各校区招生数据'"
-    />
-    <q-markup-table class="q-mx-sm q-mb-lg">
-      <thead>
-        <tr>
-          <td>校区</td>
-          <td>累计人次</td>
-          <td>排序</td>
-          <td>平时班</td>
-          <td>排序</td>
-          <td>假期班</td>
-          <td>排序</td>
-          <td>软件班</td>
-          <td>排序</td>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <tr
-          v-for="(item, index) in schoolData"
-          :key="index"
-        >
-          <td class="text-left">{{item.schoolName}}</td>
-          <td>{{item.totalNumber}}</td>
-          <td>{{item.totalOrder}}</td>
-          <td>{{item.normalNumber}}</td>
-          <td>{{item.normalOrder}}</td>
-          <td>{{item.vocationNumber}}</td>
-          <td>{{item.vocationOrder}}</td>
-          <td>{{item.softwareNumber}}</td>
-          <td>{{item.softwareOrder}}</td>
-        </tr>
-      </tbody>
-    </q-markup-table>
-
-    <nl-block-title
-      id="province"
-      :title="'学员学校数据来源'"
-    />
-    <q-markup-table class="q-mx-sm q-mb-lg">
-      <thead>
-        <tr>
-          <td>地区</td>
-          <td>累计人次</td>
-          <td>排序</td>
-          <td>平时班</td>
-          <td>排序</td>
-          <td>假期班</td>
-          <td>排序</td>
-          <td>软件班</td>
-          <td>排序</td>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <tr
-          v-for="(item, index) in provinceData"
-          :key="index"
-        >
-          <td class="text-left">{{item.provinceName}}</td>
-          <td>{{item.totalNumber}}</td>
-          <td>{{item.totalOrder}}</td>
-          <td>{{item.normalNumber}}</td>
-          <td>{{item.normalOrder}}</td>
-          <td>{{item.vocationNumber}}</td>
-          <td>{{item.vocationOrder}}</td>
-          <td>{{item.softwareNumber}}</td>
-          <td>{{item.softwareOrder}}</td>
-        </tr>
-      </tbody>
-    </q-markup-table>
-
-    <nl-block-title
-      id="pro"
-      :title="'假期各校区快题班专业'"
-    />
-    <q-markup-table class="q-mx-sm q-mb-lg">
-      <thead>
-        <tr>
-          <td>校区</td>
-          <td>总人数</td>
-          <td
-            v-for="(item,index) in proList"
+      <nl-block-title
+        id="school"
+        :title="'各校区招生数据'"
+      />
+      <q-markup-table class="q-mx-sm q-mb-lg">
+        <thead>
+          <tr>
+            <td>校区</td>
+            <td>累计人次</td>
+            <td>排序</td>
+            <td>平时班</td>
+            <td>排序</td>
+            <td>假期班</td>
+            <td>排序</td>
+            <td>软件班</td>
+            <td>排序</td>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr
+            v-for="(item, index) in schoolData"
             :key="index"
           >
-            {{item.name}}
-          </td>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <tr
-          v-for="(item, index) in ktProData"
-          :key="index"
-        >
-          <td class="text-left">{{item.schoolName}}</td>
-          <td>{{item.totalNumber}}</td>
-          <td
-            v-for="(zy, idx) in proList"
-            :key="idx"
-          >
-            {{item[zy.name] || 0}}
-          </td>
-        </tr>
-      </tbody>
-    </q-markup-table>
+            <td class="text-left">{{item.schoolName}}</td>
+            <td>{{item.totalNumber}}</td>
+            <td>{{item.totalOrder}}</td>
+            <td>{{item.normalNumber}}</td>
+            <td>{{item.normalOrder}}</td>
+            <td>{{item.vocationNumber}}</td>
+            <td>{{item.vocationOrder}}</td>
+            <td>{{item.softwareNumber}}</td>
+            <td>{{item.softwareOrder}}</td>
+          </tr>
+        </tbody>
+      </q-markup-table>
 
-    <nl-block-title :title="'假期各校区软件班专业'" />
-    <q-markup-table class="q-mx-sm q-mb-lg">
-      <thead>
-        <tr>
-          <td>校区</td>
-          <td>总人数</td>
-          <td
-            v-for="(item,index) in proList"
+      <nl-block-title
+        id="province"
+        :title="'学员学校数据来源'"
+      />
+      <q-markup-table class="q-mx-sm q-mb-lg">
+        <thead>
+          <tr>
+            <td>地区</td>
+            <td>累计人次</td>
+            <td>排序</td>
+            <td>平时班</td>
+            <td>排序</td>
+            <td>假期班</td>
+            <td>排序</td>
+            <td>软件班</td>
+            <td>排序</td>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr
+            v-for="(item, index) in provinceData"
             :key="index"
           >
-            {{item.name}}
-          </td>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <tr
-          v-for="(item, index) in softwareProData"
-          :key="index"
-        >
-          <td class="text-left">{{item.schoolName}}</td>
-          <td>{{item.totalNumber}}</td>
-          <td
-            v-for="(zy, idx) in proList"
-            :key="idx"
+            <td class="text-left">{{item.provinceName}}</td>
+            <td>{{item.totalNumber}}</td>
+            <td>{{item.totalOrder}}</td>
+            <td>{{item.normalNumber}}</td>
+            <td>{{item.normalOrder}}</td>
+            <td>{{item.vocationNumber}}</td>
+            <td>{{item.vocationOrder}}</td>
+            <td>{{item.softwareNumber}}</td>
+            <td>{{item.softwareOrder}}</td>
+          </tr>
+        </tbody>
+      </q-markup-table>
+
+      <nl-block-title
+        id="pro"
+        :title="'假期各校区快题班专业'"
+      />
+      <q-markup-table class="q-mx-sm q-mb-lg">
+        <thead>
+          <tr>
+            <td>校区</td>
+            <td>总人数</td>
+            <td
+              v-for="(item,index) in proList"
+              :key="index"
+            >
+              {{item.name}}
+            </td>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr
+            v-for="(item, index) in ktProData"
+            :key="index"
           >
-            {{item[zy.name] || 0}}
-          </td>
-        </tr>
-      </tbody>
-    </q-markup-table>
+            <td class="text-left">{{item.schoolName}}</td>
+            <td>{{item.totalNumber}}</td>
+            <td
+              v-for="(zy, idx) in proList"
+              :key="idx"
+            >
+              {{item[zy.name] || 0}}
+            </td>
+          </tr>
+        </tbody>
+      </q-markup-table>
+
+      <nl-block-title :title="'假期各校区软件班专业'" />
+      <q-markup-table class="q-mx-sm q-mb-lg">
+        <thead>
+          <tr>
+            <td>校区</td>
+            <td>总人数</td>
+            <td
+              v-for="(item,index) in proList"
+              :key="index"
+            >
+              {{item.name}}
+            </td>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr
+            v-for="(item, index) in softwareProData"
+            :key="index"
+          >
+            <td class="text-left">{{item.schoolName}}</td>
+            <td>{{item.totalNumber}}</td>
+            <td
+              v-for="(zy, idx) in proList"
+              :key="idx"
+            >
+              {{item[zy.name] || 0}}
+            </td>
+          </tr>
+        </tbody>
+      </q-markup-table>
+    </q-pull-to-refresh>
   </q-page>
 </template>
 
@@ -356,81 +358,94 @@ export default {
     }
   },
   created () {
-    const timeStamp = Date.now()
-    this.time = date.formatDate(timeStamp, 'YYYY-MM-DD HH:mm')
-
-    getYesterdaySignNum().then(res => {
-      this.yesterdaySum = res.data
-    })
-    getTodaySignNum().then(res => {
-      this.todaySum = res.data
-    })
-    getYearSignSum().then(res => {
-      this.yearSum = res.data
-    })
-    getSchoolData().then(res => {
-      this.schoolData = res.data
-    })
-    getProvinceData().then(res => {
-      this.provinceData = res.data
-    })
-    getKtProData().then(res => {
-      this.ktProData = res.data
-    })
-    getSoftwareProData().then(res => {
-      this.softwareProData = res.data
-    })
-
-    getPros(this.shopId).then(res => {
-      this.proList = res.data
-    })
+    this.loadData()
   },
   mounted () {
-    const myChart = this.initMap()
-    getMapData().then(res => {
-      const data = res.data
-      const myData = []
-      let maxNumber = -1
-      data.forEach(item => {
-        if (item.number > maxNumber) { maxNumber = item.number }
-        myData.push({
-          name: this.nameMap(item.province),
-          value: item.number
-        })
-      })
-      myChart.hideLoading()
-      myChart.setOption({
-        series: [{
-          name: '数据',
-          type: 'map',
-          mapType: 'china',
-          roam: true,
-          label: {
-            normal: {
-              show: false // 省份名称,显示的话太挤了
-            },
-            emphasis: {
-              show: false
-            }
-          },
-          data: myData // 数据
-        }],
-        visualMap: {
-          min: 0,
-          max: 10000,
-          x: 'left',
-          y: 'center',
-          text: ['High', 'Low'],
-          realtime: false,
-          calculable: true,
-          inRange: {
-            color: ['lightskyblue', 'yellow', 'orangered']
-          }
-        }
-      })
-    })
+    this.loadMap()
   },
   methods: {
+    loadData () {
+      const timeStamp = Date.now()
+      this.time = date.formatDate(timeStamp, 'YYYY-MM-DD HH:mm:ss')
+
+      getYesterdaySignNum().then(res => {
+        this.yesterdaySum = res.data
+      })
+      getTodaySignNum().then(res => {
+        this.todaySum = res.data
+      })
+      getYearSignSum().then(res => {
+        this.yearSum = res.data
+      })
+      getSchoolData().then(res => {
+        this.schoolData = res.data
+      })
+      getProvinceData().then(res => {
+        this.provinceData = res.data
+      })
+      getKtProData().then(res => {
+        this.ktProData = res.data
+      })
+      getSoftwareProData().then(res => {
+        this.softwareProData = res.data
+      })
+
+      getPros(this.shopId).then(res => {
+        this.proList = res.data
+      })
+    },
+    loadMap () {
+      const myChart = this.initMap()
+      getMapData().then(res => {
+        const data = res.data
+        const myData = []
+        let maxNumber = -1
+        data.forEach(item => {
+          if (item.number > maxNumber) { maxNumber = item.number }
+          myData.push({
+            name: this.nameMap(item.province),
+            value: item.number
+          })
+        })
+        myChart.hideLoading()
+        myChart.setOption({
+          series: [{
+            name: '数据',
+            type: 'map',
+            mapType: 'china',
+            roam: true,
+            label: {
+              normal: {
+                show: false // 省份名称,显示的话太挤了
+              },
+              emphasis: {
+                show: false
+              }
+            },
+            data: myData // 数据
+          }],
+          visualMap: {
+            min: 0,
+            max: 10000,
+            x: 'left',
+            y: 'center',
+            text: ['High', 'Low'],
+            realtime: false,
+            calculable: true,
+            inRange: {
+              color: ['lightskyblue', 'yellow', 'orangered']
+            }
+          }
+        })
+      })
+    },
+    refresh (done) {
+      this.loadData()
+      this.loadMap()
+      setTimeout(() => {
+        done()
+      }, 1500)
+    },
     calDiff (a, b) {
       try {
         const diff = a - b
@@ -496,6 +511,7 @@ export default {
     getYear () {
       return new Date().getFullYear()
     }
+
   }
 }
 </script>
