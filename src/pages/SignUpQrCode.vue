@@ -48,8 +48,8 @@ export default {
   },
   created () {
     // dev to prod
-    const url = 'http://haitun158.natapp1.cc/signup'
-    // const url = 'http://www.haitun158.com/fenxiao/signup'
+    // const url = 'http://haitun158.natapp1.cc/signup'
+    const url = 'http://www.haitun158.com/fenxiao/signup'
     this.qrText = url + '?shopId=' + this.shopId + '&userId=' + this.userId + '&phone=' + this.loginName
   },
   data () {

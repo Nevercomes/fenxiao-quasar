@@ -42,7 +42,7 @@
         <!-- 学习校区 -->
         <div
           class="signup__form-item"
-          :class="[invalid.shopid ? 'signup__form-item--invalid' : '']"
+          :class="[invalid.learningShopId ? 'signup__form-item--invalid' : '']"
         >
           <div class="signup__form-icon">
             <van-icon
@@ -364,6 +364,8 @@ export default {
     }
     this.shopId = getQueryParam('shopId') || this.shopId
     this.form.leadTeacher = getQueryParam('userId') || this.leadTeacher
+    // 20200811 这是报名校区，和学习校区区分
+    this.form.shopid = this.shopId
     // this.reset()
     this.getOpenId()
     this.getSchools(this.shopId)
@@ -514,7 +516,7 @@ export default {
       this.shopPicker = false
       this.formDisplay.shop = value[1]
       this.form.province = this.realShops[index[0]].code
-      this.form.shopid = this.realShops[index[0]].sList[index[1]].id
+      this.form.learningShopId = this.realShops[index[0]].sList[index[1]].id
       this.invalid.shopid = false
       this.$forceUpdate()
     },
@@ -537,7 +539,7 @@ export default {
     validate () {
       this.invalid = {
         name: undefined,
-        shopid: undefined,
+        learningShopId: undefined,
         classtype: undefined,
         school: undefined,
         major: undefined,
@@ -550,9 +552,9 @@ export default {
         isInvalid = true
         this.invalid.name = true
       }
-      if (isNullOrEmpty(this.form.shopid)) {
+      if (isNullOrEmpty(this.form.learningShopId)) {
         isInvalid = true
-        this.invalid.shopid = true
+        this.invalid.learningShopId = true
       }
       if (isNullOrEmpty(this.form.classtype)) {
         isInvalid = true

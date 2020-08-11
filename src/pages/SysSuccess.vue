@@ -7,7 +7,7 @@
         round
         dense
         icon="arrow_back_ios"
-        @click="back"
+        @click="onBack"
       />
       返回
     </q-toolbar>
