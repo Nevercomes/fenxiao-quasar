@@ -65,7 +65,16 @@
           v-ripple
           @click="onClick(item.id)"
         >
-          <q-item-section>{{item.name}}</q-item-section>
+          <q-item-section>
+            <div>
+              <span class="q-mr-sm">{{item.name}}</span>
+              <q-badge
+                v-if="item.needPay"
+                align="middle"
+                color="negative"
+              >待缴费</q-badge>
+            </div>
+          </q-item-section>
         </q-item>
       </q-list>
     </q-pull-to-refresh>
@@ -179,6 +188,7 @@ export default {
         this.empty = !this.dataList || this.dataList.length === 0
         this.dataList.forEach(element => {
           element.enrollDate = formatGroupTime(element.enrollDate)
+          element.needPay = (element.tuition - element.discount - element.reserve - element.addedTuition) > 0
         })
         this.timeList = this.groupBy(this.dataList, function (item) {
           return [item.enrollDate]

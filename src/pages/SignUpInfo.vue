@@ -33,18 +33,24 @@
       <div class="row q-gutter-sm">
         <q-input
           class="col"
+          label="报名校区"
+          v-model="signShop"
+          readonly
+        />
+        <q-input
+          class="col"
           label="上课校区"
           v-model="classShop"
           readonly
         />
+      </div>
+      <div class="row q-gutter-sm">
         <q-input
           class="col"
           label="联系方式"
           v-model="contact"
           readonly
         />
-      </div>
-      <div class="row q-gutter-sm">
         <q-input
           class="col"
           label="上课班种"
@@ -162,9 +168,14 @@ export default {
       if (this.student.gread) arr.push(this.student.gread)
       return arr.join('-')
     },
-    classShop: function () {
+    signShop: function () {
       const arr = []
       if (this.student.shopname) arr.push(this.student.shopname)
+      return arr.join('-')
+    },
+    classShop: function () {
+      const arr = []
+      if (this.student.learningShopName) arr.push(this.student.learningShopName)
       return arr.join('-')
     },
     classType: function () {
