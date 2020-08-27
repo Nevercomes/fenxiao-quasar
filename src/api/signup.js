@@ -66,7 +66,8 @@ export function listSignup (query) {
 
 export function toRedirect (param) {
   return request({
-    url: '/f/signup/snsapi/student',
+    // url: '/f/signup/snsapi/student',
+    url: '/f/signup/snsapi',
     method: 'get',
     params: param
   })

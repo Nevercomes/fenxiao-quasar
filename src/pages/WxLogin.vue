@@ -14,10 +14,10 @@ import {
 export default {
   name: 'WxLogin',
   created () {
-    const path = getQueryParam('router_path') || 'signupList'
+    const path = getQueryParam('routerPath') || 'SignUpList'
     const query = getQueryParam('query') || ''
     const param = {
-      router_path: path,
+      routerPath: path,
       query: query
     }
     toRedirect(param).then(res => {

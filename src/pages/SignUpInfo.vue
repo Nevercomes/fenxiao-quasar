@@ -162,7 +162,7 @@ export default {
     },
     studentDesc: function () {
       const arr = []
-      if (this.student.provincename) arr.push(this.student.provincename)
+      // if (this.student.provincename) arr.push(this.student.provincename)
       if (this.student.school) arr.push(this.student.school)
       if (this.student.major) arr.push(this.student.major)
       if (this.student.gread) arr.push(this.student.gread)

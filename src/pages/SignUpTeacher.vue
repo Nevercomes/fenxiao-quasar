@@ -34,18 +34,24 @@
       <div class="row q-gutter-sm">
         <q-input
           class="col"
+          label="报名校区"
+          v-model="signShop"
+          readonly
+        />
+        <q-input
+          class="col"
           label="上课校区"
           v-model="classShop"
           readonly
         />
+      </div>
+      <div class="row q-gutter-sm">
         <q-input
           class="col"
           label="联系方式"
           v-model="contact"
           readonly
         />
-      </div>
-      <div class="row q-gutter-sm">
         <q-input
           class="col"
           label="上课班种"
@@ -58,7 +64,7 @@
     <nl-block-title :title="'缴费信息'" />
 
     <q-form
-      @submit="submit"
+      @submit="onSubmit"
       class="column justify-center q-px-md q-mb-sm"
       ref="form"
     >
@@ -159,15 +165,20 @@ export default {
     },
     studentDesc: function () {
       const arr = []
-      if (this.student.provincename) arr.push(this.student.provincename)
+      // if (this.student.provincename) arr.push(this.student.provincename)
       if (this.student.school) arr.push(this.student.school)
       if (this.student.major) arr.push(this.student.major)
       if (this.student.gread) arr.push(this.student.gread)
       return arr.join('-')
     },
-    classShop: function () {
+    signShop: function () {
       const arr = []
       if (this.student.shopname) arr.push(this.student.shopname)
+      return arr.join('-')
+    },
+    classShop: function () {
+      const arr = []
+      if (this.student.learningShopName) arr.push(this.student.learningShopName)
       return arr.join('-')
     },
     classType: function () {
@@ -220,7 +231,7 @@ export default {
         if (res.code === 1) {
           this.msgSuccess('报名缴费信息保存成功')
           this.$router.push({
-            name: 'successPage',
+            name: 'SuccessPage',
             query: {
               title: '报名缴费信息填写成功',
               message: '缴费信息填写成功，请尽快与学生取得联系'
@@ -234,6 +245,9 @@ export default {
     onConfirm (value, index) {
       this.form.newOrOld = value
       this.showPicker = false
+    },
+    back () {
+      this.$router.back()
     }
   }
 }

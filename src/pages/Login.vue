@@ -112,8 +112,11 @@ export default {
   },
   created () {
     const code = getQueryParam('code')
-    this.routerPath = getQueryParam('router_path') || this.routerPath
+    this.routerPath = getQueryParam('routerPath') || this.routerPath
+    // parseQuery 把字符串转换为对象格式，其实用json传输更好
     this.query = parseQuery(getQueryParam('query')) || this.query
+    console.log(this.routerPath)
+    console.log(this.query)
     if (code) {
       this.wxLogin(code)
     }
