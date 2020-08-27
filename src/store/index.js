@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import user from './modules/user.js'
 import appStatus from './modules/appStatus'
+import sign from './modules/sign'
 import getters from './getters.js'
 
 Vue.use(Vuex)
@@ -19,7 +20,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     user,
-    appStatus
+    appStatus,
+    sign
   },
   getters,
   strict: process.env.DEV

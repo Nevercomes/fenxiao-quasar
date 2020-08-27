@@ -116,17 +116,26 @@
             <div class="signup__form-divider" />
           </div>
           <input
-            v-model="form.school"
             class="signup__form-input"
+            :value="schoolName"
             type="text"
             placeholder="就读学校"
-            @blur="validInput($event, form.school)"
+            readonly="readonly"
+            @click="goToSchoolPickerPage"
           />
+          <div class="signup__form-select-icon">
+            <van-icon
+              name="arrow"
+              color="white"
+              size="20px"
+            />
+          </div>
         </div>
 
         <!-- 在校专业 -->
         <div
-          class="signup__form-item"
+          class="
+            signup__form-item"
           :class="[invalid.major ? 'signup__form-item--invalid' : '']"
         >
           <div class="signup__form-icon">
@@ -300,13 +309,15 @@ import {
   getAreas
 } from 'src/api/signup.js'
 
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'SignUpStudent',
-  // computed: {
-  //   ...mapGetters({
-  //     'shopId'
-  //   })
-  // },
+  computed: {
+    ...mapGetters([
+      'schoolName'
+    ])
+  },
   data () {
     return {
       qrCode: require('../assets/zhuoyue-qrcode.jpg'),
@@ -353,6 +364,11 @@ export default {
       sWidth: undefined
     }
   },
+  watch: {
+    schoolName: function () {
+      this.form.school = this.schoolName
+    }
+  },
   created () {
     let state = getQueryParam('state')
     if (!isNullOrEmpty(state)) {
@@ -367,6 +383,7 @@ export default {
     // 20200811 这是报名校区，和学习校区区分
     this.form.shopid = this.shopId
     // this.reset()
+    this.$store.commit('setSchoolName', '')
     this.getOpenId()
     this.getSchools(this.shopId)
     this.getClassTypes(this.shopId)
@@ -377,6 +394,12 @@ export default {
   },
   mounted () {
     this.setHeight()
+  },
+  activated () {
+    if (!this.$route.meta.isUseCache) {
+      // 重新加载数据，包含里重置分页，设空原有数据等操作
+      this.reloadData()
+    }
   },
   methods: {
     reset () {
@@ -491,11 +514,14 @@ export default {
     },
     initEnrollDate () {
       let year = new Date().getFullYear()
-      this.enrollDates.push('已工作')
+      // 表单的语义需要placeholder来说明，默认值会让用户不知道表单的含义
+      // this.form.gread = year + '年'
+      // this.invalid.gread = false
       for (let i = 0; i < 10; i++) {
         this.enrollDates.push(year + '年')
         year = year - 1
       }
+      this.enrollDates.push('已工作')
     },
     onSubmit () {
       if (this.validate()) {
@@ -535,6 +561,9 @@ export default {
       this.form.gread = value
       this.invalid.gread = false
       this.$forceUpdate()
+    },
+    goToSchoolPickerPage () {
+      this.$router.push({ name: 'SchoolPicker' })
     },
     validate () {
       this.invalid = {

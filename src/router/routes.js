@@ -16,6 +16,11 @@ const routes = [
     component: () => import('pages/SysSuccess.vue')
   },
   {
+    path: '/school',
+    name: 'SchoolPicker',
+    component: () => import('pages/SysSchoolPicker.vue')
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
@@ -46,7 +51,8 @@ const routes = [
   {
     path: '/signup',
     name: 'SignUpStudent',
-    component: () => import('pages/SignUpStudent.vue')
+    component: () => import('pages/SignUpStudent.vue'),
+    meta: { keepAlive: true, isUseCache: true }
   },
   {
     path: '/signup/teacher',
