@@ -32,6 +32,9 @@ import vueQr from 'vue-qr'
 import {
   mapGetters
 } from 'vuex'
+
+import { getQrCodeUrl } from 'src/api/signup.js'
+
 export default {
   name: 'signupQrcode',
   components: {
@@ -48,9 +51,15 @@ export default {
   },
   created () {
     // dev to prod
-    // const url = 'http://haitun158.natapp1.cc/signup'
-    const url = 'http://www.haitun158.com/fenxiao/signup'
-    this.qrText = url + '?shopId=' + this.shopId + '&userId=' + this.userId + '&phone=' + this.loginName
+    getQrCodeUrl({
+      shopId: this.shopId,
+      userId: this.userId
+    }).then(res => {
+      this.qrText = res.data
+    })
+    // const host = process.env.NODE_ENV === 'production' ? 'http://www.haitun158.com/fenxiao' : 'http://rowingtest.nevercome.net'
+    // const uri = '/f/signup/snsapi/student'
+    // this.qrText = host + uri + '?shopId=' + this.shopId + '&userId=' + this.userId + '&phone=' + this.loginName
   },
   data () {
     return {

@@ -370,14 +370,6 @@ export default {
     }
   },
   created () {
-    let state = getQueryParam('state')
-    if (!isNullOrEmpty(state)) {
-      state = state.split('$')
-      if (state.length === 2) {
-        this.shopId = state[0]
-        this.leadTeacher = state[1]
-      }
-    }
     this.shopId = getQueryParam('shopId') || this.shopId
     this.form.leadTeacher = getQueryParam('userId') || this.leadTeacher
     // 20200811 这是报名校区，和学习校区区分
