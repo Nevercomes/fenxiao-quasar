@@ -1,6 +1,9 @@
 <template>
   <q-page>
-    <q-toolbar class="text-white shadow-2 bg-primary text-subtitle1 justify-center">
+    <q-toolbar
+      v-if="!isWechat()"
+      class="text-white shadow-2 bg-primary text-subtitle1 justify-center"
+    >
       报名学生列表
     </q-toolbar>
     <!-- 选择组 -->
@@ -172,6 +175,7 @@ export default {
     this.getYearOptions()
     this.getShopOptions()
     this.getList()
+    if (this.isWechat()) document.title = '报名学生列表'
   },
   activated () {
     if (!this.$route.meta.isUseCache) {

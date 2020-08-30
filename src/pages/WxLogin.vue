@@ -14,6 +14,7 @@ import {
 export default {
   name: 'WxLogin',
   created () {
+    if (this.isWechat()) document.title = '卓越设计教育'
     const path = getQueryParam('routerPath') || 'SignUpList'
     const query = getQueryParam('query') || ''
     const param = {

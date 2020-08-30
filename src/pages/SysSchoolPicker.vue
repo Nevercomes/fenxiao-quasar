@@ -1,6 +1,9 @@
 <template>
   <div>
-    <q-toolbar class="text-white bg-primary text-subtitle1 shadow-2">
+    <q-toolbar
+      v-if="!isWechat()"
+      class="text-white bg-primary text-subtitle1 shadow-2"
+    >
       <q-btn
         flat
         round
@@ -68,6 +71,7 @@ export default {
     }
   },
   created () {
+    if (this.isWechat()) document.title = '选择学校'
     this.loadList()
   },
   methods: {

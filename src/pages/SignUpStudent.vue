@@ -370,6 +370,7 @@ export default {
     }
   },
   created () {
+    if (this.isWechat()) document.title = '卓越设计教育'
     this.shopId = getQueryParam('shopId') || this.shopId
     this.form.leadTeacher = getQueryParam('userId') || this.leadTeacher
     // 20200811 这是报名校区，和学习校区区分

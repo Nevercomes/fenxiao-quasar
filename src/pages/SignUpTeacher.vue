@@ -1,7 +1,10 @@
 <!-- 教师通过消息点击进入的报名缴费信息填写页面 -->
 <template>
   <div>
-    <q-toolbar class="text-white bg-primary text-subtitle1 shadow-2">
+    <q-toolbar
+      v-if="!isWechat()"
+      class="text-white bg-primary text-subtitle1 shadow-2"
+    >
       <q-btn
         flat
         round
@@ -198,6 +201,7 @@ export default {
     }
   },
   created () {
+    if (this.isWechat()) document.title = '填写缴费信息'
     this.reset()
     this.signupId = this.$route.query.signupId
     this.getSignup(this.signupId)

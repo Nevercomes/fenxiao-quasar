@@ -111,6 +111,7 @@ export default {
     }
   },
   created () {
+    if (this.isWechat()) document.title = '卓越设计教育'
     const code = getQueryParam('code')
     this.routerPath = getQueryParam('routerPath') || this.routerPath
     // parseQuery 把字符串转换为对象格式，其实用json传输更好

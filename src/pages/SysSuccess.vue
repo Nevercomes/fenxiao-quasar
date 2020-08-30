@@ -1,7 +1,10 @@
 <!-- 表单提交等操作成功跳转的页面 -->
 <template>
   <div class="app-container">
-    <q-toolbar class="text-white bg-primary text-subtitle1 shadow-2">
+    <q-toolbar
+      v-if="!isWechat()"
+      class="text-white bg-primary text-subtitle1 shadow-2"
+    >
       <q-btn
         flat
         round
@@ -34,6 +37,7 @@ export default {
     }
   },
   created () {
+    if (this.isWechat()) document.title = '操作成功'
     const title = this.$route.query && this.$route.query.title
     const message = this.$route.query && this.$route.query.message
     this.title = title || this.title

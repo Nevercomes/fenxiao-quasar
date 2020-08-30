@@ -1,15 +1,3 @@
-// 判断是否是微信浏览器的函数
-export function isWechat () {
-  const ua = window.navigator.userAgent.toLowerCase()
-  alert(JSON.stringify(ua))
-  // 通过正则表达式匹配ua中是否含有MicroMessenger字符串
-  if (ua.match(/MicroMessenger/i) === 'micromessenger') {
-    return true
-  } else {
-    return false
-  }
-}
-
 export function isNullOrEmpty (str) {
   if (!str || str === undefined || str === 'null' || str === '') {
     return true

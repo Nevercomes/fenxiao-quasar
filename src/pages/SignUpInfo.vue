@@ -1,6 +1,9 @@
 <template>
   <div>
-    <q-toolbar class="text-white bg-primary text-subtitle1 shadow-2">
+    <q-toolbar
+      v-if="!isWechat()"
+      class="text-white bg-primary text-subtitle1 shadow-2"
+    >
       <q-btn
         flat
         round
@@ -197,6 +200,7 @@ export default {
   created () {
     this.id = this.$route.query && this.$route.query.id
     this.getSignup(this.id)
+    if (this.isWechat()) document.title = '报名详细信息'
   },
   methods: {
     reset () {

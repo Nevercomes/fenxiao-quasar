@@ -1,6 +1,9 @@
 <template>
   <q-page>
-    <q-toolbar class="text-white shadow-2 bg-primary text-subtitle1 justify-center">
+    <q-toolbar
+      v-if="!isWechat()"
+      class="text-white shadow-2 bg-primary text-subtitle1 justify-center"
+    >
       {{title}}
     </q-toolbar>
     <div
@@ -57,6 +60,7 @@ export default {
     }).then(res => {
       this.qrText = res.data
     })
+    if (this.isWechat()) document.title = '招生二维码'
     // const host = process.env.NODE_ENV === 'production' ? 'http://www.haitun158.com/fenxiao' : 'http://rowingtest.nevercome.net'
     // const uri = '/f/signup/snsapi/student'
     // this.qrText = host + uri + '?shopId=' + this.shopId + '&userId=' + this.userId + '&phone=' + this.loginName
@@ -74,9 +78,11 @@ export default {
       if (this.qrcodeType === 'sign') {
         this.qrcodeType = 'zhuoyue'
         this.title = '卓越手绘设计家公众号'
+        if (this.isWechat()) document.title = '卓越手绘设计家公众号'
       } else if (this.qrcodeType === 'zhuoyue') {
         this.qrcodeType = 'sign'
         this.title = this.name + '招生二维码'
+        if (this.isWechat()) document.title = '招生二维码'
       }
     }
   }
