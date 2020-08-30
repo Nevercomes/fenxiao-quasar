@@ -171,11 +171,11 @@ export default {
     }
   },
   created () {
+    if (this.isWechat()) document.title = '报名学生列表'
     // 初始化年份列表
     this.getYearOptions()
     this.getShopOptions()
     this.getList()
-    if (this.isWechat()) document.title = '报名学生列表'
   },
   activated () {
     if (!this.$route.meta.isUseCache) {

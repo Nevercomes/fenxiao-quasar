@@ -358,8 +358,8 @@ export default {
     }
   },
   created () {
-    this.loadData()
     if (this.isWechat()) document.title = '卓越全国最新实时报名情况'
+    this.loadData()
   },
   mounted () {
     this.loadMap()

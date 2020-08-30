@@ -29,7 +29,7 @@
 export default {
   name: 'Error404',
   created () {
-    if (this.isWechat()) document.title = '卓越设计教育'
+    if (this.isWechat()) document.title = '页面未找到'
   }
 }
 </script>

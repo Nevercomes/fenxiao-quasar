@@ -198,9 +198,9 @@ export default {
     }
   },
   created () {
+    if (this.isWechat()) document.title = '报名详细信息'
     this.id = this.$route.query && this.$route.query.id
     this.getSignup(this.id)
-    if (this.isWechat()) document.title = '报名详细信息'
   },
   methods: {
     reset () {

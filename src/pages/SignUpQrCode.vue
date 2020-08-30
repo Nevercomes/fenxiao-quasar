@@ -53,14 +53,13 @@ export default {
     ])
   },
   created () {
-    // dev to prod
+    if (this.isWechat()) document.title = '招生二维码'
     getQrCodeUrl({
       shopId: this.shopId,
       userId: this.userId
     }).then(res => {
       this.qrText = res.data
     })
-    if (this.isWechat()) document.title = '招生二维码'
     // const host = process.env.NODE_ENV === 'production' ? 'http://www.haitun158.com/fenxiao' : 'http://rowingtest.nevercome.net'
     // const uri = '/f/signup/snsapi/student'
     // this.qrText = host + uri + '?shopId=' + this.shopId + '&userId=' + this.userId + '&phone=' + this.loginName
