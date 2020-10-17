@@ -427,7 +427,7 @@ export default {
           }],
           visualMap: {
             min: 0,
-            max: 10000,
+            max: 2000,
             x: 'left',
             y: 'center',
             text: ['High', 'Low'],

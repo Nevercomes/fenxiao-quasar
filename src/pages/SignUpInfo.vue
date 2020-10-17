@@ -111,6 +111,16 @@
           readonly
         />
       </div>
+      <div class="row q-gutter-sm">
+        <q-input
+          class="col"
+          label="备注内容"
+          v-model="form.remarks"
+          type="textarea"
+          clearable
+        />
+      </div>
+
       <q-btn
         label="提交"
         type="submit"
@@ -221,6 +231,7 @@ export default {
         this.form.reserve = this.student.reserve
         this.form.newOrOld = this.student.newOrOld
         this.form.discount = this.student.discount
+        this.form.remarks = this.student.remarks
       })
     },
     submit () {
@@ -228,6 +239,7 @@ export default {
       this.student.reserve = this.form.reserve
       this.student.newOrOld = this.form.newOrOld
       this.student.discount = this.form.discount
+      this.student.remarks = this.form.remarks
       this.$refs.form.validate().then(success => {
         if (success) {
           this.submiting = true

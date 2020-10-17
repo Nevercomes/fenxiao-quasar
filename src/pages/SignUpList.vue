@@ -7,9 +7,9 @@
       报名学生列表
     </q-toolbar>
     <!-- 选择组 -->
-    <div class="flex">
+    <div class="row">
       <q-btn-dropdown
-        class="col text-black ellipsis q-py-sm"
+        class="col-6 text-black ellipsis q-py-sm"
         color="white"
         flat
         :label="queryParams.shopName"
@@ -30,7 +30,7 @@
       </q-btn-dropdown>
 
       <q-btn-dropdown
-        class="col text-black ellipsis q-py-sm"
+        class="col-3 text-black ellipsis q-py-sm"
         color="white"
         flat
         :label="queryParams.year"
@@ -49,6 +49,20 @@
           </q-item>
         </q-list>
       </q-btn-dropdown>
+
+      <q-input
+        dense
+        v-model="queryParams.studentName"
+        class="col-3 q-pr-sm"
+        placeholder="姓名"
+        type="search"
+        @input="onSearchInput"
+      >
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+
     </div>
 
     <q-pull-to-refresh @refresh="refresh">
@@ -219,6 +233,17 @@ export default {
     onYearItemClick (item) {
       this.queryParams.year = item.value
       this.getList()
+    },
+    onSearchInput () {
+      console.log(this.queryParams.studentName)
+      // 根据输入内容直接在前端过滤得到数据
+      const filterList = this.dataList.filter(item => {
+        return item.name.indexOf(this.queryParams.studentName) !== -1
+      })
+      this.empty = !filterList || filterList.length === 0
+      this.timeList = this.groupBy(filterList, function (item) {
+        return [item.enrollDate]
+      })
     },
     onClick (id) {
       // 跳转到详情页面
