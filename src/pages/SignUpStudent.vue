@@ -263,6 +263,7 @@
         :columns="timeProAndClasTypeList"
         @cancel="classTypePicker = false"
         @confirm="classTypePickerConfirm"
+        @change="classTypePickerChange"
       />
     </van-popup>
     <van-popup
@@ -344,13 +345,14 @@ export default {
 
       classTimes: [
         '平时班',
-        '假期7月',
-        '假期8月',
-        '假期1月',
-        '假期2月'
+        '假期班7月',
+        '假期班8月',
+        '假期班1月',
+        '假期班2月'
       ],
 
       timeProAndClasTypeList: [],
+      groupedClassTypes: new Map(),
 
       enrollPicker: false,
       enrollDates: [],
@@ -439,6 +441,7 @@ export default {
         })
       }
     },
+    // 这里的学校是指报名校区
     getSchools (shopId) {
       getSchools(shopId).then(res => {
         // 从学校中取出区域
@@ -471,10 +474,32 @@ export default {
     getClassTypes (shopId) {
       getClassTypes(shopId).then(res => {
         this.realClassTypes = res.data
-        this.classTypes = res.data.map(c => c.classtypename)
-        this.timeProAndClasTypeList[2] = {
-          values: this.classTypes
+        // 从这里面取出开课时间时间数据
+        let openClassTimeList = res.data.map(s => s.openTime)
+        const aSet = new Map()
+        openClassTimeList = openClassTimeList.filter(a => !aSet.has(a) && aSet.set(a))
+        this.classTimes = openClassTimeList
+        this.timeProAndClasTypeList[0] = {
+          values: this.classTimes
         }
+        // 对classType进行分组
+        let groupedClassTypes = {}
+        groupedClassTypes = this.groupBy(this.realClassTypes, function (item) {
+          return [item.openTime]
+        })
+        // 将二维数组转化为map
+        groupedClassTypes.forEach(item => {
+          this.groupedClassTypes.set(item[0].openTime, item.map(c => c.classtypename))
+        })
+        console.log(this.groupedClassTypes)
+        this.timeProAndClasTypeList[3] = {
+          values: this.groupedClassTypes.get(this.classTimes[0])
+        }
+
+        // this.classTypes = res.data.map(c => c.classtypename)
+        // this.timeProAndClasTypeList[2] = {
+        //   values: this.classTypes
+        // }
       })
     },
     getPros (shopId) {
@@ -487,9 +512,9 @@ export default {
       })
     },
     getClassTimes () {
-      this.timeProAndClasTypeList[0] = {
-        values: this.classTimes
-      }
+      // this.timeProAndClasTypeList[0] = {
+      //   values: this.classTimes
+      // }
     },
     getAreas () {
       getAreas().then(res => {
@@ -548,6 +573,11 @@ export default {
       this.form.classTime = value[0]
       this.invalid.classtype = false
       this.$forceUpdate()
+    },
+    classTypePickerChange (picker, values, index) {
+      if (index === 0) {
+        picker.setColumnValues(2, this.groupedClassTypes.get(values[0]))
+      }
     },
     enrollPickerConfirm (value) {
       this.enrollPicker = false
@@ -641,6 +671,17 @@ export default {
       this.$refs.FormBox.style.paddingTop = sHeight * 0.08 + 'px'
       // this.$refs.BackImage.style.height = sHeight + 'px'
       // this.$refs.BackImage.style.width = sWidth + 'px'
+    },
+    groupBy (array, f) {
+      var groups = {}
+      array.forEach(function (o) {
+        var group = JSON.stringify(f(o))
+        groups[group] = groups[group] || []
+        groups[group].push(o)
+      })
+      return Object.keys(groups).map(function (group) {
+        return groups[group]
+      })
     }
   }
 }
