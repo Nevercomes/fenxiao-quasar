@@ -745,6 +745,7 @@ $form-item-height: 36px;
   align-self: center;
   padding-left: 15px;
   padding-right: 10px;
+  z-index: 10;
 
   .icon-decoration {
     width: 14px;
@@ -755,7 +756,10 @@ $form-item-height: 36px;
     position: absolute;
     // left: 17px;
     bottom: 0;
-    z-index: -10;
+    // 可能是因为背景显示的方式修改了的缘故,黄点没有显示了
+    // 但是没有黄点好像还更清爽一些
+    // z-index: -10;
+    z-index: 9;
   }
 }
 
