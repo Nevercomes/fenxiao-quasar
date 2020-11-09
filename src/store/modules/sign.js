@@ -1,10 +1,14 @@
 const sign = {
   state: {
-    schoolName: ''
+    schoolName: '',
+    provinceCode: ''
   },
   mutations: {
     setSchoolName (state, schoolName) {
       state.schoolName = schoolName
+    },
+    setProvinceCode (state, provinceCode) {
+      state.provinceCode = provinceCode
     }
   }
 }

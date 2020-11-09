@@ -36,7 +36,7 @@
         clickable
         v-ripple
         class="relative-position q-my-xs"
-        @click="onItemClick(item.schoolName)"
+        @click="onItemClick(item)"
       >
         <q-item-section>
           {{item.schoolName}}
@@ -89,8 +89,9 @@ export default {
       }
       this.empty = !this.schoolList || this.schoolList.length === 0
     },
-    onItemClick (schoolName) {
-      this.$store.commit('setSchoolName', schoolName)
+    onItemClick (school) {
+      this.$store.commit('setSchoolName', school.schoolName)
+      this.$store.commit('setProvinceCode', school.provinceCode)
       this.$router.back()
     },
     back () {

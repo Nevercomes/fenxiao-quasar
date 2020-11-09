@@ -7,6 +7,7 @@ const getters = {
   userId: state => state.user.userId,
   shopId: state => state.user.shopId,
   loginName: state => state.user.loginName,
-  schoolName: state => state.sign.schoolName
+  schoolName: state => state.sign.schoolName,
+  provinceCode: state => state.sign.provinceCode
 }
 export default getters

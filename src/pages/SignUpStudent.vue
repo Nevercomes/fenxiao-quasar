@@ -316,7 +316,8 @@ export default {
   name: 'SignUpStudent',
   computed: {
     ...mapGetters([
-      'schoolName'
+      'schoolName',
+      'provinceCode'
     ])
   },
   data () {
@@ -369,6 +370,7 @@ export default {
   watch: {
     schoolName: function () {
       this.form.school = this.schoolName
+      this.form.province = this.provinceCode
     }
   },
   created () {
@@ -379,6 +381,7 @@ export default {
     this.form.shopid = this.shopId
     // this.reset()
     this.$store.commit('setSchoolName', '')
+    this.$store.commit('provinceCode', '')
     this.getOpenId()
     this.getSchools(this.shopId)
     this.getClassTypes(this.shopId)
@@ -559,7 +562,7 @@ export default {
     shopPickerConfirm (value, index) {
       this.shopPicker = false
       this.formDisplay.shop = value[1]
-      this.form.province = this.realShops[index[0]].code
+      // this.form.province = this.realShops[index[0]].code
       this.form.learningShopId = this.realShops[index[0]].sList[index[1]].id
       this.invalid.shopid = false
       this.$forceUpdate()
