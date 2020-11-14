@@ -92,12 +92,13 @@ export default {
   data () {
     return {
       form: {
-        // username: '15211142974',
-        // password: 'zhuoyue123',
-        // shopId: '8e5d6871ec224bc792ce65b8f7a29213'
-        username: '',
-        password: '',
-        shopId: ''
+        username: '15211142974',
+        password: 'zhuoyue123',
+        shopId: '8e5d6871ec224bc792ce65b8f7a29213',
+        openId: ''
+        // username: '',
+        // password: '',
+        // shopId: ''
       },
       submiting: false,
       // 根据loginName获取门店列表
@@ -135,6 +136,7 @@ export default {
       this.$refs.form.validate().then(success => {
         if (success) {
           this.submiting = true
+          this.form.openId = this.openId
           this.$store
             .dispatch('Login', this.form)
             .then(() => {

@@ -51,12 +51,14 @@ const user = {
   },
   actions: {
     Login ({
-      commit
+      commit,
+      state
     }, info) {
       const username = info.username.trim()
       const password = info.password
       const shopId = info.shopId
-      const openId = info.openId
+      const openId = info.openId || state.openId
+      console.log(openId)
       return new Promise((resolve, reject) => {
         login({
           username: username,

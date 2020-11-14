@@ -436,7 +436,9 @@ export default {
       const code = getQueryParam('code')
       if (!isNullOrEmpty(code)) {
         getOpenId(code).then(res => {
-          this.form.openId = res.data.openId
+          if (process.env.NODE_ENV === 'development') {
+            this.form.openId = res.data.openId
+          }
           // 未关注公众号，弹窗显示卓越的二维码
           if (!res.data.subscribe) {
             this.showQrCode = true
@@ -547,6 +549,7 @@ export default {
     onSubmit () {
       if (this.validate()) {
         // 调用提交方法
+        this.form.openId = 'oi8tjw_gOd8GLmeorPd-ak8y9k84'
         saveSignup(this.form).then(res => {
           this.msgSuccess('提交信息成功，请等待老师与您联系')
           this.$router.push({
