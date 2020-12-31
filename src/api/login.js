@@ -26,6 +26,7 @@ export function toRedirect (params) {
 
 export function logout () {
   return request({
-
+    url: '/a/logout',
+    method: 'get'
   })
 }

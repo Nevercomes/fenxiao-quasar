@@ -129,11 +129,10 @@ const user = {
 
     // 退出系统
     Logout ({
-      commit,
-      state
+      commit
     }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        logout().then(() => {
           commit('SET_TOKEN', '')
           commit('SET_SHOPID', '')
           commit('SET_OPENID', '')

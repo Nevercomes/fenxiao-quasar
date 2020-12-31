@@ -27,6 +27,18 @@
         @click="changeQrCode"
       >切换二维码</q-btn>
     </div>
+    <q-fab
+      color="primary"
+      icon="keyboard_arrow_up"
+      direction="up"
+      style="position: absolute; bottom: 30px; right: 30px"
+    >
+      <q-fab-action
+        color="secondary"
+        @click="onSignOutClick"
+        icon="signout"
+      />
+    </q-fab>
   </q-page>
 </template>
 
@@ -83,6 +95,29 @@ export default {
         this.title = this.name + '招生二维码'
         if (this.isWechat()) document.title = '招生二维码'
       }
+    },
+    onSignOutClick () {
+      this.$q.dialog({
+        title: '退出登录',
+        message: '退出登录将回到登录界面',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        // console.log('>>>> OK')
+        this.$store.dispatch('Logout').then(res => {
+          this.$router.replace({
+            name: 'Login'
+          })
+        }).catch(() => {
+          this.msgError('退出登录失败')
+        })
+      }).onOk(() => {
+        // console.log('>>>> second OK catcher')
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
     }
   }
 }

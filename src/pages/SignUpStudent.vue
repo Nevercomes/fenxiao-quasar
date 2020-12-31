@@ -223,15 +223,20 @@
             <div class="icon-decoration" />
             <div class="signup__form-divider" />
           </div>
-          <input
+          <!-- <input
             class="signup__form-input"
             v-model="form.qq"
             type="text"
             placeholder="QQ号码"
             @blur="validInput($event, form.qq)"
+          /> -->
+          <input
+            class="signup__form-input"
+            v-model="form.qq"
+            type="text"
+            placeholder="QQ号码"
           />
         </div>
-
       </div>
 
       <button
@@ -354,6 +359,7 @@ export default {
 
       timeProAndClasTypeList: [],
       groupedClassTypes: new Map(),
+      groupedClassTypesWithId: {},
 
       enrollPicker: false,
       enrollDates: [],
@@ -494,10 +500,18 @@ export default {
         groupedClassTypes.forEach(item => {
           this.groupedClassTypes.set(item[0].openTime, item.map(c => c.classtypename))
         })
-        console.log(this.groupedClassTypes)
-        this.timeProAndClasTypeList[3] = {
+        console.log(groupedClassTypes)
+        this.groupedClassTypesWithId = groupedClassTypes
+        // 不是很懂为什么这里是3，名称不一致问题可能和这个有关系
+        // 后来发现没关系
+        // this.timeProAndClasTypeList[3] = {
+        this.timeProAndClasTypeList[2] = {
           values: this.groupedClassTypes.get(this.classTimes[0])
         }
+        console.log(this.realClassTypes)
+        console.log(this.classTimes)
+        console.log(this.groupedClassTypes)
+        console.log(this.timeProAndClasTypeList)
 
         // this.classTypes = res.data.map(c => c.classtypename)
         // this.timeProAndClasTypeList[2] = {
@@ -573,7 +587,18 @@ export default {
     classTypePickerConfirm (value, index) {
       this.classTypePicker = false
       this.formDisplay.classType = value[1] + '-' + value[2] + '-' + value[0]
-      this.form.classtype = this.realClassTypes[index[2]].id
+      // bug maybe begin 20201231
+      // 这个怎么看怎么有问题啊...这个index[2]应该是picker的第三列的第几个的意思，而这个第三列（班种）已经是做过映射之后的了
+      // 现在是用这个index直接去realClassTypes里面找，肯定会映射错误，而且这应该不是个例而是普遍会有很多错误
+      // 首先可以验证一下发现错误的这个 ‘软件基础班’在第三列的index，肯定是和‘手绘综合班’在realClassTypes中的index一样的,果然都是5
+      // 感觉其它也不需要验证了，以前测软件班统计数据的时候会正确是因为软件班都在平时班里，和realClassTypes的所在相对位置是一致的，所以发现不了
+      // 那么接下来就是如何解决了，肯定是要换一种找id的方式，其实直接把id作为对象的一部分就可以了吧，不过vant只能传入纯内容的数组
+      // 所以还是要建立一个和传入vant的数组对应的带id的映射
+      // this.form.classtype = this.realClassTypes[index[2]].id
+      // bug maybe end
+      // bug fix
+      this.form.classtype = this.groupedClassTypesWithId[index[0]][index[2]].id
+      // 上面那句代码的注释：这里的index[0]就是开课时间这一列的index，对应的就是withId这个数组的第一维
       this.form.bmzy = this.realPros[index[1]].id
       this.form.bmzyname = this.formDisplay.classType
       this.form.classTime = value[0]
@@ -630,9 +655,14 @@ export default {
         isInvalid = true
         this.invalid.phone = true
       }
-      if (isNullOrEmpty(this.form.qq)) {
+      if (isNullOrEmpty(this.form.gread)) {
         isInvalid = true
-        this.invalid.qq = true
+        this.invalid.gread = true
+      }
+      if (isNullOrEmpty(this.form.qq)) {
+        // qq 设置为非必填项
+        // isInvalid = true
+        // this.invalid.qq = true
       }
       if (isInvalid) {
         this.msgWarn('请正确填写所有信息')
