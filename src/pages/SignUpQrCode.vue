@@ -36,7 +36,7 @@
       <q-fab-action
         color="secondary"
         @click="onSignOutClick"
-        icon="signout"
+        icon="logout"
       />
     </q-fab>
   </q-page>
