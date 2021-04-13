@@ -14,10 +14,20 @@
       报名详细信息
     </q-toolbar>
 
-    <nl-block-title
+    <!-- <nl-block-title
       :title="'学生信息'"
       class="q-mt-sm"
-    />
+    /> -->
+    <div class="row justify-between items-center q-px-md q-py-sm">
+        <div class="row items-center">
+          <div
+            style="width: 4px; height:1.2em"
+            class="bg-primary"
+          />
+          <div class="text-subtitle1 q-ml-sm text-primary text-bold">学生信息</div>
+        </div>
+        <q-icon size="sm" name="edit" color="primary" @click="onEditInfoClicked" />
+    </div>
     <div class="column q-px-md q-mb-sm">
       <div class="row q-gutter-sm">
         <q-input
@@ -282,6 +292,14 @@ export default {
     },
     back () {
       this.$router.back()
+    },
+    onEditInfoClicked () {
+      this.$router.push({
+        name: 'SignUpInfoBasic',
+        query: {
+          id: this.id
+        }
+      })
     },
     isNullOrEmpty (obj) {
       return isNullOrEmpty(obj)

@@ -64,6 +64,11 @@ const routes = [
     name: 'SignUpInfo',
     component: () => import('pages/SignUpInfo.vue')
   },
+  {
+    path: '/signup/infoBasic',
+    name: 'SignUpInfoBasic',
+    component: () => import('pages/SignUpInfoBasic.vue')
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

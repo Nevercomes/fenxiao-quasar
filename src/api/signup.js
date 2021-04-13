@@ -20,12 +20,32 @@ export function getClassTypes (shopId) {
   })
 }
 
+export function getClassTimes (shopId) {
+  return request({
+    url: '/f/classTime/list',
+    method: 'get',
+    params: {
+      shopId: shopId
+    }
+  })
+}
+
 export function getPros (shopId) {
   return request({
     url: '/f/professnal/list',
     method: 'get',
     params: {
       shopId: shopId
+    }
+  })
+}
+
+export function getProsByStudentTempId (id) {
+  return request({
+    url: '/a/professnal/listByStudentTempId',
+    method: 'get',
+    params: {
+      id: id
     }
   })
 }
@@ -94,5 +114,13 @@ export function getAreas () {
   return request({
     url: '/f/signup/area',
     method: 'get'
+  })
+}
+
+export function updateBasicInfo (data) {
+  return request({
+    url: '/a/signup/basicInfo',
+    method: 'put',
+    data: data
   })
 }
